@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.IO;
 
@@ -16,7 +17,15 @@ namespace TetraModifyTaste
             //args[0] = @"G:\Project\TetraModifyTaste\Database.xlsx";
             //args[1] = @"G:\Project\TetraModifyTaste\";
 
+            const string quote = "\"";
+            const string doubleQuote = quote + quote;
+            const string comma = ",";
+            const string end = "\r\n";
+
             FileInfo xlsxFile = new FileInfo(args[0]);
+
+        begin:
+
             IWorkbook workbook = new XSSFWorkbook(xlsxFile);
             List<List<List<string>>> table = new List<List<List<string>>>();
 
@@ -44,11 +53,6 @@ namespace TetraModifyTaste
                     }
                 }
             }
-
-            const string quote = "\"";
-            const string doubleQuote = quote + quote;
-            const string comma = ",";
-            const string end = "\r\n";
 
             List<string> csvs = new List<string>();
 
@@ -78,6 +82,10 @@ namespace TetraModifyTaste
 
             for (int i = 0; i < csvs.Count; i++)
                 File.WriteAllText(args[1] + workbook.GetSheetAt(i).SheetName + ".csv", csvs[i], System.Text.Encoding.UTF8);
+
+            Console.WriteLine("Reset? (y/N) ");
+            if (Console.ReadKey().Key is ConsoleKey.Y)
+                goto begin;
         }
     }
 }
