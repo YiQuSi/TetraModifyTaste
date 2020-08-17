@@ -83,7 +83,7 @@ namespace TetraModifyTaste
             for (int i = 0; i < csvs.Count; i++)
                 File.WriteAllText(args[1] + workbook.GetSheetAt(i).SheetName + ".csv", csvs[i], System.Text.Encoding.UTF8);
 
-            Console.WriteLine("Reset? (y/N) ");
+            Console.WriteLine("Restart? (y/N) ");
             if (Console.ReadKey().Key is ConsoleKey.Y)
                 goto begin;
         }
